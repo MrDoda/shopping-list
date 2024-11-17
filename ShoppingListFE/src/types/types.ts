@@ -16,5 +16,6 @@ export interface ShoppingList {
   items: Array<ShoppingListItem>
   members: Array<User>
   name: string
-  hide?: boolean
+  hideComplete?: boolean
+  archived?: boolean
 }

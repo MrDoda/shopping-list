@@ -34,6 +34,7 @@ export const Detail = () => {
   const { id } = useParams()
   const { getShoppingListDetail } = useShoppingList()
   const navigate = useNavigate()
+  const { patchShoppingList } = useShoppingList()
 
   useEffect(() => {
     const load = async () => {
@@ -42,6 +43,18 @@ export const Detail = () => {
     }
     load()
   }, [id])
+
+  const changeShoppingList = (patchedShoppingList: Partial<ShoppingList>) => {
+    setShoppingList((shoppingListOriginal) => {
+      if (!shoppingListOriginal) return null
+      return {
+        ...shoppingListOriginal,
+        ...patchedShoppingList,
+      }
+    })
+
+    // patchShoppingList would be used to update on server
+  }
 
   if (!shoppingList) {
     return (
@@ -74,9 +87,15 @@ export const Detail = () => {
         <Box width="48px" />
       </Box>
 
-      <ShoppingListComponent shoppingList={shoppingList} />
+      <ShoppingListComponent
+        shoppingList={shoppingList}
+        changeShoppingList={changeShoppingList}
+      />
 
-      <UserShoppingListManagement shoppingList={shoppingList} />
+      <UserShoppingListManagement
+        shoppingList={shoppingList}
+        changeShoppingList={changeShoppingList}
+      />
     </Container>
   )
 }

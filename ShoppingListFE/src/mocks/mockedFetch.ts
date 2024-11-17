@@ -1,4 +1,5 @@
 import { shoppingListObject } from './shopping-list'
+import { users } from './users'
 
 export async function mockedFetch(
   input: RequestInfo,
@@ -20,6 +21,16 @@ export async function mockedFetch(
       }
 
       return createMockResponse({ message: 'Not Found' }, 404)
+    },
+
+    '/user/': () => {
+      if (token == 'owner') {
+        return createMockResponse(users, 200)
+      }
+      if (token == 'member') {
+        return createMockResponse(users, 200)
+      }
+      return createMockResponse({ message: 'Unauthorized access.' }, 403)
     },
   }
 

@@ -17,7 +17,22 @@ export const useShoppingList = () => {
     return result
   }
 
+  const patchShoppingList = async (shoppingList: ShoppingList) => {
+    const [error, result] = await request<ShoppingList>(
+      `shopping-list/${shoppingList.id}`,
+      shoppingList,
+      'PATCH'
+    )
+    if (error) {
+      console.error('Error updating shopping-list:', error)
+      addAlert({ key: 'shopping-list-update', message: error?.message })
+      return null
+    }
+    return result
+  }
+
   return {
     getShoppingListDetail,
+    patchShoppingList,
   }
 }

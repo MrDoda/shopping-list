@@ -17,6 +17,7 @@ export const shoppingListObject: ShoppingList = {
       id: '2',
       content: 'Item on a shopping list. - completed',
       ownerId: '1',
+      done: true,
     },
   ],
 }
