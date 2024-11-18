@@ -76,7 +76,7 @@ export const UserShoppingListManagement = ({
           </ListItem>
         ))}
       </List>
-      {isMember && (
+      {isOwner && (
         <>
           <Divider sx={{ marginY: 2 }} />
 
