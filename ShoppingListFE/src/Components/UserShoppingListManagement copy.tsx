@@ -104,31 +104,33 @@ export const UserShoppingListManagement = ({
               ))}
           </Select>
         </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            startIcon={<Add />}
-            sx={{ backgroundColor: '#FF66FF', color: 'white' }}
-            onClick={() => {
-              if (selectedUserId) {
-                const selectedUser = users.find(
-                  (user) => user.id === selectedUserId
-                )
-                if (selectedUser) {
-                  addShoppingListMember(
-                    selectedUser,
-                    shoppingList,
-                    changeShoppingList
+        {isOwner && (
+          <Grid item>
+            <Button
+              variant="contained"
+              startIcon={<Add />}
+              sx={{ backgroundColor: '#FF66FF', color: 'white' }}
+              onClick={() => {
+                if (selectedUserId) {
+                  const selectedUser = users.find(
+                    (user) => user.id === selectedUserId
                   )
-                  setSelectedUserId(null)
+                  if (selectedUser) {
+                    addShoppingListMember(
+                      selectedUser,
+                      shoppingList,
+                      changeShoppingList
+                    )
+                    setSelectedUserId(null)
+                  }
                 }
-              }
-            }}
-            disabled={!selectedUserId}
-          >
-            ADD
-          </Button>
-        </Grid>
+              }}
+              disabled={!selectedUserId}
+            >
+              ADD
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </Paper>
   )

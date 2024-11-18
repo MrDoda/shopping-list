@@ -24,6 +24,8 @@ import {
   updateShoppingListItem,
 } from '../utils/shoppingListUtils'
 import { useState } from 'react'
+import { useStore } from '../store/useStore'
+import { appStore } from '../store/appStore'
 
 interface Props {
   shoppingList: ShoppingList
@@ -36,12 +38,13 @@ export const ShoppingListComponent = ({
 }: Props) => {
   const [isEdit, setEdit] = useState<boolean>(false)
   const { isOwner, isMember } = usePermissions(shoppingList)
+  const user = useStore(appStore, 'user')
 
   const addNewItem = () => {
     const newItem: ShoppingListItem = {
       id: Math.random().toString(),
       content: '',
-      ownerId: shoppingList.ownerId,
+      ownerId: user?.id || '',
       done: false,
     }
 
