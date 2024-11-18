@@ -76,62 +76,66 @@ export const UserShoppingListManagement = ({
           </ListItem>
         ))}
       </List>
+      {isMember && (
+        <>
+          <Divider sx={{ marginY: 2 }} />
 
-      <Divider sx={{ marginY: 2 }} />
-
-      <Grid container spacing={1} alignItems="center">
-        <Grid item>
-          <Search />
-        </Grid>
-        <Grid item xs>
-          <Select
-            variant="outlined"
-            placeholder="Select user"
-            fullWidth
-            value={selectedUserId || ''}
-            onChange={(e) => setSelectedUserId(e.target.value)}
-          >
-            {users
-              .filter(
-                (user) =>
-                  user.id !== shoppingList.ownerId &&
-                  !shoppingList.members.some((member) => member.id === user.id)
-              )
-              .map((user) => (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.name}
-                </MenuItem>
-              ))}
-          </Select>
-        </Grid>
-        {isOwner && (
-          <Grid item>
-            <Button
-              variant="contained"
-              startIcon={<Add />}
-              sx={{ backgroundColor: '#FF66FF', color: 'white' }}
-              onClick={() => {
-                if (selectedUserId) {
-                  const selectedUser = users.find(
-                    (user) => user.id === selectedUserId
+          <Grid container spacing={1} alignItems="center">
+            <Grid item>
+              <Search />
+            </Grid>
+            <Grid item xs>
+              <Select
+                variant="outlined"
+                placeholder="Select user"
+                fullWidth
+                value={selectedUserId || ''}
+                onChange={(e) => setSelectedUserId(e.target.value)}
+              >
+                {users
+                  .filter(
+                    (user) =>
+                      user.id !== shoppingList.ownerId &&
+                      !shoppingList.members.some(
+                        (member) => member.id === user.id
+                      )
                   )
-                  if (selectedUser) {
-                    addShoppingListMember(
-                      selectedUser,
-                      shoppingList,
-                      changeShoppingList
+                  .map((user) => (
+                    <MenuItem key={user.id} value={user.id}>
+                      {user.name}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </Grid>
+
+            <Grid item>
+              <Button
+                variant="contained"
+                startIcon={<Add />}
+                sx={{ backgroundColor: '#FF66FF', color: 'white' }}
+                onClick={() => {
+                  if (selectedUserId) {
+                    const selectedUser = users.find(
+                      (user) => user.id === selectedUserId
                     )
-                    setSelectedUserId(null)
+                    if (selectedUser) {
+                      addShoppingListMember(
+                        selectedUser,
+                        shoppingList,
+                        changeShoppingList
+                      )
+                      setSelectedUserId(null)
+                    }
                   }
-                }
-              }}
-              disabled={!selectedUserId}
-            >
-              ADD
-            </Button>
+                }}
+                disabled={!selectedUserId}
+              >
+                ADD
+              </Button>
+            </Grid>
           </Grid>
-        )}
-      </Grid>
+        </>
+      )}
     </Paper>
   )
 }
