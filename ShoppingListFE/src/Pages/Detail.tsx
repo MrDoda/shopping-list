@@ -2,30 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useShoppingList } from '../hooks/useShoppingList'
 import { ShoppingList } from '../types/types'
-import {
-  Container,
-  Box,
-  Typography,
-  Paper,
-  Button,
-  TextField,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Checkbox,
-  Divider,
-  Grid,
-} from '@mui/material'
-import {
-  Add,
-  Edit,
-  Delete,
-  VisibilityOff,
-  Save,
-  Search,
-  ArrowBack,
-} from '@mui/icons-material'
+import { Container, Box, Typography, IconButton } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
 import { ShoppingListComponent } from '../Components/ShoppingListComponent'
 import { UserShoppingListManagement } from '../Components/UserShoppingListManagement copy'
 

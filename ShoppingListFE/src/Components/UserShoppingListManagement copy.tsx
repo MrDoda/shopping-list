@@ -9,7 +9,6 @@ import {
   MenuItem,
   Paper,
   Select,
-  TextField,
   Typography,
 } from '@mui/material'
 import { ShoppingList, User } from '../types/types'
@@ -45,7 +44,7 @@ export const UserShoppingListManagement = ({
       userArray && setUsers(userArray)
     }
     loadUsers()
-  }, [getUsers])
+  }, [shoppingList])
 
   if (!users) return null
 
@@ -95,8 +94,8 @@ export const UserShoppingListManagement = ({
             {users
               .filter(
                 (user) =>
-                  user.id !== shoppingList.ownerId && // Exclude the owner user
-                  !shoppingList.members.some((member) => member.id === user.id) // Exclude already existing members
+                  user.id !== shoppingList.ownerId &&
+                  !shoppingList.members.some((member) => member.id === user.id)
               )
               .map((user) => (
                 <MenuItem key={user.id} value={user.id}>
@@ -121,11 +120,11 @@ export const UserShoppingListManagement = ({
                     shoppingList,
                     changeShoppingList
                   )
-                  setSelectedUserId(null) // Reset the selection
+                  setSelectedUserId(null)
                 }
               }
             }}
-            disabled={!selectedUserId} // Disable button if no user is selected
+            disabled={!selectedUserId}
           >
             ADD
           </Button>

@@ -39,7 +39,7 @@ export const ShoppingListComponent = ({
 
   const addNewItem = () => {
     const newItem: ShoppingListItem = {
-      id: crypto.randomUUID(), // Generate a unique ID for the new item
+      id: Math.random().toString(),
       content: '',
       ownerId: shoppingList.ownerId,
       done: false,
@@ -49,7 +49,7 @@ export const ShoppingListComponent = ({
       'items',
       shoppingList,
       changeShoppingList
-    )([...shoppingList.items, newItem]) // Append the new item to the items array
+    )([...shoppingList.items, newItem])
   }
 
   return (
@@ -126,7 +126,7 @@ export const ShoppingListComponent = ({
                       'items',
                       shoppingList,
                       changeShoppingList
-                    )(shoppingList.items.filter((_, i) => i !== index)) // Remove the item at the given index
+                    )(shoppingList.items.filter((_, i) => i !== index))
                   }}
                 >
                   <Delete />
