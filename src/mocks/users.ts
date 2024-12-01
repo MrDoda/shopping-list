@@ -12,4 +12,6 @@ export const users = [
     name: 'Random Bunny',
     id: '374',
   },
+  { id: 'user1', name: 'Alice' },
+  { id: 'user2', name: 'Bob' },
 ]

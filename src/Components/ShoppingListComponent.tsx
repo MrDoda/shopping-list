@@ -136,7 +136,9 @@ export const ShoppingListComponent = ({
                 </IconButton>
               }
               value={item.id}
-              sx={{ backgroundColor: index % 2 ? '#4b304c' : 'transparent' }}
+              sx={{
+                background: index % 2 ? '#fdf4ff' : 'transparent',
+              }}
             >
               <Checkbox
                 edge="start"
@@ -147,6 +149,7 @@ export const ShoppingListComponent = ({
                     changeShoppingList
                   )('done', e.target.checked)
                 }}
+                color="primary"
                 checked={!!item.done}
               />
 

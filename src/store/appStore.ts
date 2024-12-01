@@ -1,3 +1,4 @@
+import { users } from '../mocks/users.ts'
 import { ShoppingList, User } from '../types/types.ts'
 import { createStore } from './store.tsx'
 
@@ -11,6 +12,8 @@ interface AppState {
 const initialState: AppState = {
   alerts: {},
   shoppingLists: [],
+  user: users[users.length - 2],
+  token: 'owner',
 }
 
 const appStore = createStore(initialState)

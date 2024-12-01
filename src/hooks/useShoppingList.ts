@@ -31,8 +31,23 @@ export const useShoppingList = () => {
     return result
   }
 
+  const getAllShoppingLists = async () => {
+    const [error, result] = await request<ShoppingList[]>(
+      'shopping-list',
+      undefined,
+      'GET'
+    )
+    if (error) {
+      console.error('Error fetching shopping lists:', error)
+      addAlert({ key: 'shopping-list-fetch', message: error?.message })
+      return null
+    }
+    return result
+  }
+
   return {
     getShoppingListDetail,
     patchShoppingList,
+    getAllShoppingLists,
   }
 }

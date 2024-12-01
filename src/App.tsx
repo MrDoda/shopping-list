@@ -10,7 +10,7 @@ import { Alerts } from './Components/Alerts'
 
 export const themeOptions: ThemeOptions = {
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
       main: '#E682E9',
       light: '#F895FC',

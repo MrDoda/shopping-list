@@ -20,7 +20,21 @@ export const useUsers = () => {
     return result
   }
 
+  const getMyself = async () => {
+    const [error, result] = await request<User>(`user/me`, undefined, 'GET')
+    if (error || !result) {
+      console.error('Error getting myself:', error)
+      addAlert({
+        key: 'get-myself',
+        message: error?.message || 'User failed to load.',
+      })
+      return null
+    }
+    return result
+  }
+
   return {
     getUsers,
+    getMyself,
   }
 }
