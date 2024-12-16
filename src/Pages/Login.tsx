@@ -33,8 +33,10 @@ export const Login = () => {
       password: formData.password,
     })
     if (result?.token) {
+      appStore.setState({ token: result.token })
       const user = await getMyself()
-      appStore.setState({ token: result.token, user: user || undefined })
+      appStore.setState({ user: user || undefined })
+
       navigate(Pages.Home)
     }
   }

@@ -13,7 +13,6 @@ const initialState: AppState = {
   alerts: {},
   shoppingLists: [],
   user: users[users.length - 2],
-  token: 'owner',
 }
 
 const appStore = createStore(initialState)

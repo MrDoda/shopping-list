@@ -6,7 +6,6 @@ import { AddShoppingListCard } from './AddShoppingListCard'
 interface ShoppingListsGridProps {
   shoppingLists: ShoppingList[]
   showArchived: boolean
-  onToggleItemDone: (listId: string, itemId: string) => void
   onDeleteList: (listId: string) => void
   onAddShoppingListClick: () => void
   user: User
@@ -15,7 +14,6 @@ interface ShoppingListsGridProps {
 export const ShoppingListsGrid = ({
   shoppingLists,
   showArchived,
-  onToggleItemDone,
   onDeleteList,
   onAddShoppingListClick,
   user,
@@ -32,7 +30,6 @@ export const ShoppingListsGrid = ({
         <ShoppingListCard
           key={list.id}
           list={list}
-          onToggleItemDone={onToggleItemDone}
           onDeleteList={onDeleteList}
           isOwner={user.id == list.ownerId}
         />

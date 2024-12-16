@@ -44,7 +44,7 @@ export const UserShoppingListManagement = ({
       userArray && setUsers(userArray)
     }
     loadUsers()
-  }, [shoppingList])
+  }, [])
 
   if (!users) return null
 

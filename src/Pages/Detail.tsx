@@ -1,28 +1,39 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useShoppingList } from '../hooks/useShoppingList'
 import { ShoppingList } from '../types/types'
-import { Container, Box, Typography, IconButton } from '@mui/material'
+import {
+  Container,
+  Box,
+  Typography,
+  IconButton,
+  CircularProgress,
+} from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
 import { ShoppingListComponent } from '../Components/ShoppingListComponent'
 import { UserShoppingListManagement } from '../Components/UserShoppingListManagement copy'
+import { useShoppingList } from '../hooks/useShoppingList'
 
 export const Detail = () => {
   const [shoppingList, setShoppingList] = useState<ShoppingList | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const { id } = useParams()
-  const { getShoppingListDetail } = useShoppingList()
+  const { getShoppingListDetail, patchShoppingList } = useShoppingList()
   const navigate = useNavigate()
-  const { patchShoppingList } = useShoppingList()
+  const debounceTimer = useRef<any>(null)
 
   useEffect(() => {
     const load = async () => {
+      setLoading(true)
       const shoppingList = await getShoppingListDetail(id)
       shoppingList && setShoppingList(shoppingList)
+      setLoading(false)
     }
     load()
-  }, [id])
+  }, [])
 
-  const changeShoppingList = (patchedShoppingList: Partial<ShoppingList>) => {
+  const changeShoppingList = async (
+    patchedShoppingList: Partial<ShoppingList>
+  ) => {
     setShoppingList((shoppingListOriginal) => {
       if (!shoppingListOriginal) return null
       return {
@@ -31,7 +42,41 @@ export const Detail = () => {
       }
     })
 
-    // patchShoppingList would be used to update on server
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current)
+    }
+
+    debounceTimer.current = setTimeout(async () => {
+      if (id && shoppingList) {
+        const updatedShoppingList = { ...shoppingList, ...patchedShoppingList }
+        const result = await patchShoppingList(updatedShoppingList)
+        if (!result) {
+          console.error('Failed to patch shopping list')
+          setShoppingList(shoppingList)
+        }
+      }
+    }, 500)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current)
+      }
+    }
+  }, [])
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    )
   }
 
   if (!shoppingList) {

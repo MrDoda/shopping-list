@@ -45,9 +45,39 @@ export const useShoppingList = () => {
     return result
   }
 
+  const createShoppingList = async (shoppingList: ShoppingList) => {
+    const [error, result] = await request<ShoppingList>(
+      'shopping-list',
+      shoppingList,
+      'POST'
+    )
+    if (error) {
+      console.error('Error creating shopping-list:', error)
+      addAlert({ key: 'shopping-list-create', message: error?.message })
+      return null
+    }
+    return result
+  }
+
+  const deleteShoppingList = async (id: string) => {
+    const [error] = await request<void>(
+      `shopping-list/${id}`,
+      undefined,
+      'DELETE'
+    )
+    if (error) {
+      console.error('Error deleting shopping-list:', error)
+      addAlert({ key: 'shopping-list-delete', message: error?.message })
+      return false
+    }
+    return true
+  }
+
   return {
     getShoppingListDetail,
     patchShoppingList,
     getAllShoppingLists,
+    createShoppingList,
+    deleteShoppingList,
   }
 }

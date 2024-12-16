@@ -14,14 +14,12 @@ import { useNavigate } from 'react-router-dom' // Import useNavigate
 
 interface ShoppingListCardProps {
   list: ShoppingList
-  onToggleItemDone: (listId: string, itemId: string) => void
   onDeleteList: (listId: string) => void
   isOwner: boolean
 }
 
 export const ShoppingListCard = ({
   list,
-  onToggleItemDone,
   onDeleteList,
   isOwner,
 }: ShoppingListCardProps) => {
@@ -45,9 +43,9 @@ export const ShoppingListCard = ({
         border: list.archived ? '2px solid #ccc' : '2px solid transparent',
         opacity: list.archived ? 0.8 : 1,
         position: 'relative',
-        cursor: 'pointer', // Indicate that the card is clickable
+        cursor: 'pointer',
       }}
-      onClick={handleCardClick} // Add onClick handler to the Card
+      onClick={handleCardClick}
     >
       <CardContent>
         <Tooltip title={list.name}>
@@ -69,8 +67,8 @@ export const ShoppingListCard = ({
               control={
                 <Checkbox
                   checked={!!item.done}
-                  onClick={(e) => e.stopPropagation()} // Prevent event propagation
-                  onChange={() => onToggleItemDone(list.id, item.id)}
+                  onClick={(e) => e.stopPropagation()}
+                  disabled={true}
                   size="small"
                 />
               }
