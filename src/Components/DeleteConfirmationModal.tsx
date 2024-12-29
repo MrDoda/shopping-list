@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material'
+import { useIntl } from 'react-intl'
 
 interface DeleteConfirmationProps {
   open: boolean
@@ -19,21 +20,24 @@ export const DeleteConfirmationModal: React.FC<DeleteConfirmationProps> = ({
   onClose,
   onConfirm,
 }) => {
+  const intl = useIntl()
+
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Delete Shopping List</DialogTitle>
+      <DialogTitle>
+        {intl.formatMessage({ id: 'modal.deleteConfirmation.title' })}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete this shopping list? This action cannot
-          be undone.
+          {intl.formatMessage({ id: 'modal.deleteConfirmation.message' })}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
-          Cancel
+          {intl.formatMessage({ id: 'modal.deleteConfirmation.cancel' })}
         </Button>
         <Button onClick={onConfirm} color="error">
-          Delete
+          {intl.formatMessage({ id: 'modal.deleteConfirmation.delete' })}
         </Button>
       </DialogActions>
     </Dialog>

@@ -5,6 +5,7 @@ import { appStore } from '../store/appStore'
 import { useNavigate } from 'react-router-dom'
 import { Pages } from '../store/pages'
 import { useUsers } from '../hooks/useUsers'
+import { useIntl } from 'react-intl'
 
 export const Login = () => {
   const { login, register } = useAuthentication()
@@ -16,6 +17,7 @@ export const Login = () => {
   })
   const navigate = useNavigate()
   const { getMyself } = useUsers()
+  const intl = useIntl()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -25,8 +27,8 @@ export const Login = () => {
   const handleSubmit = async () => {
     if (isRegistering) {
       if (await register(formData)) {
+        setIsRegistering(false)
       }
-      setIsRegistering(false)
     }
     const result = await login({
       email: formData.email,
@@ -46,26 +48,28 @@ export const Login = () => {
       container
       direction="column"
       alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: '100vh' }}
+      style={{ minHeight: 'calc(100vh - 100px)' }}
     >
       <Paper
         sx={{
-          width: 300,
+          maxWidth: 340,
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
           p: 3,
           border: '1px solid #ccc',
           borderRadius: '8px',
+          mt: 6,
         }}
       >
         <Typography variant="h5" textAlign="center">
-          {isRegistering ? 'Register' : 'Login'}
+          {intl.formatMessage({
+            id: isRegistering ? 'auth.register' : 'auth.login',
+          })}
         </Typography>
         {isRegistering && (
           <TextField
-            label="Name"
+            label={intl.formatMessage({ id: 'auth.name' })}
             name="name"
             value={formData.name}
             onChange={handleInputChange}
@@ -73,14 +77,14 @@ export const Login = () => {
           />
         )}
         <TextField
-          label="Email"
+          label={intl.formatMessage({ id: 'auth.email' })}
           name="email"
           value={formData.email}
           onChange={handleInputChange}
           fullWidth
         />
         <TextField
-          label="Password"
+          label={intl.formatMessage({ id: 'auth.password' })}
           name="password"
           type="password"
           value={formData.password}
@@ -88,29 +92,31 @@ export const Login = () => {
           fullWidth
         />
         <Button variant="contained" onClick={handleSubmit} fullWidth>
-          {isRegistering ? 'Register' : 'Login'}
+          {intl.formatMessage({
+            id: isRegistering ? 'auth.register' : 'auth.login',
+          })}
         </Button>
         <Typography textAlign="center">
           {isRegistering ? (
             <>
-              Already have an account?{' '}
+              {intl.formatMessage({ id: 'auth.alreadyHaveAccount' })}{' '}
               <Link
                 component="button"
                 onClick={() => setIsRegistering(false)}
                 underline="none"
               >
-                Login
+                {intl.formatMessage({ id: 'auth.login' })}
               </Link>
             </>
           ) : (
             <>
-              Don't have an account?{' '}
+              {intl.formatMessage({ id: 'auth.noAccount' })}{' '}
               <Link
                 component="button"
                 onClick={() => setIsRegistering(true)}
                 underline="none"
               >
-                Register
+                {intl.formatMessage({ id: 'auth.register' })}
               </Link>
             </>
           )}

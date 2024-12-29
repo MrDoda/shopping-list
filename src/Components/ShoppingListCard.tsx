@@ -10,7 +10,8 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { ShoppingList } from '../types/types'
-import { useNavigate } from 'react-router-dom' // Import useNavigate
+import { useNavigate } from 'react-router-dom'
+import { useIntl } from 'react-intl'
 
 interface ShoppingListCardProps {
   list: ShoppingList
@@ -23,10 +24,11 @@ export const ShoppingListCard = ({
   onDeleteList,
   isOwner,
 }: ShoppingListCardProps) => {
-  const navigate = useNavigate() // Initialize useNavigate
+  const navigate = useNavigate()
+  const intl = useIntl()
 
   const handleCardClick = () => {
-    navigate(`/detail/${list.id}`) // Navigate to the detail page
+    navigate(`/detail/${list.id}`)
   }
 
   return (
@@ -91,7 +93,7 @@ export const ShoppingListCard = ({
           ))}
           {list.items.length > 2 && (
             <Typography variant="body2" color="textSecondary">
-              ...and more
+              {intl.formatMessage({ id: 'card.moreItems' })}
             </Typography>
           )}
         </Box>

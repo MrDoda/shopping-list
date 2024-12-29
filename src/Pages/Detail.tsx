@@ -10,8 +10,9 @@ import {
 } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
 import { ShoppingListComponent } from '../Components/ShoppingListComponent'
-import { UserShoppingListManagement } from '../Components/UserShoppingListManagement copy'
+import { UserShoppingListManagement } from '../Components/UserShoppingListManagement'
 import { useShoppingList } from '../hooks/useShoppingList'
+import { useIntl } from 'react-intl'
 
 export const Detail = () => {
   const [shoppingList, setShoppingList] = useState<ShoppingList | null>(null)
@@ -20,6 +21,7 @@ export const Detail = () => {
   const { getShoppingListDetail, patchShoppingList } = useShoppingList()
   const navigate = useNavigate()
   const debounceTimer = useRef<any>(null)
+  const intl = useIntl()
 
   useEffect(() => {
     const load = async () => {
@@ -72,7 +74,7 @@ export const Detail = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="100vh"
+        height="calc(100vh - 100px)"
       >
         <CircularProgress />
       </Box>
@@ -85,16 +87,13 @@ export const Detail = () => {
         <IconButton onClick={() => navigate(-1)}>
           <ArrowBack />
         </IconButton>
-        Whoops! Something went wrong.
+        {intl.formatMessage({ id: 'detail.error' })}
       </div>
     )
   }
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{ backgroundColor: '#FFB3FF', padding: 2, borderRadius: 2 }}
-    >
+    <Container maxWidth="sm" sx={{ padding: 2 }}>
       <Box
         display="flex"
         alignItems="center"
@@ -105,7 +104,7 @@ export const Detail = () => {
           <ArrowBack />
         </IconButton>
         <Typography variant="h4" align="center">
-          Detail
+          {intl.formatMessage({ id: 'detail.title' })}
         </Typography>
         <Box width="48px" />
       </Box>

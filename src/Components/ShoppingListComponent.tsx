@@ -26,6 +26,7 @@ import {
 import { useState } from 'react'
 import { useStore } from '../store/useStore'
 import { appStore } from '../store/appStore'
+import { useIntl } from 'react-intl'
 
 interface Props {
   shoppingList: ShoppingList
@@ -39,6 +40,7 @@ export const ShoppingListComponent = ({
   const [isEdit, setEdit] = useState<boolean>(false)
   const { isOwner, isMember } = usePermissions(shoppingList)
   const user = useStore(appStore, 'user')
+  const intl = useIntl()
 
   const addNewItem = () => {
     const newItem: ShoppingListItem = {
@@ -136,9 +138,6 @@ export const ShoppingListComponent = ({
                 </IconButton>
               }
               value={item.id}
-              sx={{
-                background: index % 2 ? '#fdf4ff' : 'transparent',
-              }}
             >
               <Checkbox
                 edge="start"
@@ -178,7 +177,7 @@ export const ShoppingListComponent = ({
         sx={{ backgroundColor: '#FF66FF', color: 'white' }}
         onClick={addNewItem}
       >
-        Přidat další položku
+        {intl.formatMessage({ id: 'shoppingList.addItem' })}
       </Button>
     </Paper>
   )

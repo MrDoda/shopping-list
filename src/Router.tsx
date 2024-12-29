@@ -5,6 +5,7 @@ import { Login } from './Pages/Login'
 import { Pages } from './store/pages'
 import { useStore } from './store/useStore'
 import { appStore } from './store/appStore'
+import { TopBar } from './Components/TopBar'
 
 const ProtectedRoute = ({ element }: { element: React.ReactNode | null }) => {
   const token = useStore(appStore, 'token')
@@ -15,6 +16,7 @@ const ProtectedRoute = ({ element }: { element: React.ReactNode | null }) => {
 export const Router = () => {
   return (
     <HashRouter>
+      <TopBar />
       <Routes>
         <Route path={Pages.Login} element={<Login />} />
         <Route

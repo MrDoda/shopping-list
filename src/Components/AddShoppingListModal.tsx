@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, TextField, Modal, Typography } from '@mui/material'
+import { useIntl } from 'react-intl'
 
 interface Props {
   open: boolean
@@ -13,6 +14,7 @@ export const AddShoppingListModal: React.FC<Props> = ({
   onAdd,
 }) => {
   const [name, setName] = useState('')
+  const intl = useIntl()
 
   const handleSubmit = () => {
     if (name.trim()) {
@@ -38,10 +40,10 @@ export const AddShoppingListModal: React.FC<Props> = ({
         }}
       >
         <Typography variant="h6" mb={2}>
-          Add New Shopping List
+          {intl.formatMessage({ id: 'modal.addShoppingList.title' })}
         </Typography>
         <TextField
-          label="List Name"
+          label={intl.formatMessage({ id: 'modal.addShoppingList.label' })}
           fullWidth
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -49,10 +51,10 @@ export const AddShoppingListModal: React.FC<Props> = ({
         />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            {intl.formatMessage({ id: 'modal.addShoppingList.cancel' })}
           </Button>
           <Button variant="contained" onClick={handleSubmit}>
-            Add
+            {intl.formatMessage({ id: 'modal.addShoppingList.add' })}
           </Button>
         </Box>
       </Box>
