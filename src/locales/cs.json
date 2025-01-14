@@ -28,5 +28,9 @@
   "shoppingList.addItem": "Přidat další položku",
   "topBar.logout": "Odhlásit se",
   "topBar.lightMode": "Přepnout na světlý režim",
-  "topBar.darkMode": "Přepnout na tmavý režim"
+  "topBar.darkMode": "Přepnout na tmavý režim",
+  "home.shoppingListsOverview": "Shrnutí",
+  "home.done": "Hotovo",
+  "home.notDone": "Není Hotovo",
+  "detail.solvedUnsolvedChart": "Splněné/Nesplněné položky"
 }

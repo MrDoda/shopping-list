@@ -28,5 +28,9 @@
   "shoppingList.addItem": "Add another item",
   "topBar.logout": "Logout",
   "topBar.lightMode": "Switch to Light Mode",
-  "topBar.darkMode": "Switch to Dark Mode"
+  "topBar.darkMode": "Switch to Dark Mode",
+  "home.shoppingListsOverview": "Overview",
+  "home.done": "Done",
+  "home.notDone": "Not Done",
+  "detail.solvedUnsolvedChart": "Progress of items"
 }

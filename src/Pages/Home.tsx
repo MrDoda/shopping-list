@@ -1,5 +1,20 @@
+// Home.tsx
+
+// Add these imports at the top (if not already there)
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
+
+// ...existing imports...
 import { useEffect, useState } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Paper, Typography } from '@mui/material'
 import { ShoppingList } from '../types/types'
 import { AddShoppingListModal } from '../Components/AddShoppingListModal'
 import { DeleteConfirmationModal } from '../Components/DeleteConfirmationModal'
@@ -24,22 +39,25 @@ export const Home = () => {
   useEffect(() => {
     const loadShoppingLists = async () => {
       const result = await getAllShoppingLists()
-      result && setShoppingLists(result)
+      if (result) {
+        setShoppingLists(result)
+      }
     }
     loadShoppingLists()
   }, [])
 
   const handleAddShoppingList = async (name: string) => {
+    if (!user) return
     const newList: ShoppingList = {
       id: '',
-      ownerId: user?.id || '',
+      ownerId: user.id,
       items: [],
-      members: [{ id: user?.id || '', name: user?.name || '' }],
+      members: [{ id: user.id, name: user.name }],
       name,
     }
-    const result = await createShoppingList(newList)
-    if (result) {
-      setShoppingLists((prev) => [...prev, result])
+    const createdList = await createShoppingList(newList)
+    if (createdList) {
+      setShoppingLists((prev) => [...prev, createdList])
       setModalOpen(false)
     }
   }
@@ -66,18 +84,63 @@ export const Home = () => {
     setModalOpen(true)
   }
 
-  if (!user)
+  if (!user) {
     return <div>{intl.formatMessage({ id: 'home.error.userNotFound' })}</div>
+  }
+
+  const filteredLists = shoppingLists.filter((list) =>
+    showArchived ? true : !list.archived
+  )
+
+  const chartData = filteredLists.map((list) => {
+    const done = list.items.filter((item) => item.done).length
+    const notDone = list.items.length - done
+
+    return {
+      name: list.name,
+      [intl.formatMessage({ id: 'home.done' })]: done,
+      [intl.formatMessage({ id: 'home.notDone' })]: notDone,
+    }
+  })
 
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h4" textAlign="center" gutterBottom>
         {intl.formatMessage({ id: 'home.title' })}
       </Typography>
+
       <ArchiveToggle
         showArchived={showArchived}
         setShowArchived={setShowArchived}
       />
+
+      <Box m={'auto'} mb={7} sx={{ maxWidth: 300, maxHeight: 300 }}>
+        <Paper sx={{ pr: 5 }}>
+          <Typography variant="h6" sx={{ textAlign: 'center' }}>
+            {intl.formatMessage({ id: 'home.shoppingListsOverview' })}
+          </Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Bar
+                dataKey={intl.formatMessage({ id: 'home.done' })}
+                stackId="items"
+                fill="#82ca9d"
+              />
+              <Bar
+                dataKey={intl.formatMessage({ id: 'home.notDone' })}
+                stackId="items"
+                fill="#8884d8"
+              />
+              <Legend />
+            </BarChart>
+          </ResponsiveContainer>
+        </Paper>
+      </Box>
+
       <ShoppingListsGrid
         user={user}
         shoppingLists={shoppingLists}
@@ -85,11 +148,13 @@ export const Home = () => {
         onDeleteList={handleDeleteList}
         onAddShoppingListClick={handleAddShoppingListClick}
       />
+
       <AddShoppingListModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         onAdd={handleAddShoppingList}
       />
+
       <DeleteConfirmationModal
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}

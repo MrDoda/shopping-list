@@ -3,7 +3,7 @@ import { shoppingListObject } from './shopping-list'
 export const shoppingListArray = [
   {
     id: 'X',
-    ownerId: 'user1',
+    ownerId: '4',
     items: [
       { id: 'item1', content: 'Apples', ownerId: 'user1', done: true },
       { id: 'item2', content: 'Bananas', ownerId: 'user1' },
@@ -13,7 +13,7 @@ export const shoppingListArray = [
   },
   {
     id: '2',
-    ownerId: 'user2',
+    ownerId: '4',
     items: [
       { id: 'item3', content: 'Detergent', ownerId: 'user2' },
       { id: 'item4', content: 'Toothpaste', ownerId: 'user2' },
@@ -23,7 +23,7 @@ export const shoppingListArray = [
   },
   {
     id: '3',
-    ownerId: 'user2',
+    ownerId: '4',
     items: [
       { id: 'item5', content: 'Detergent', ownerId: 'user2' },
       { id: 'item6', content: 'Toothpaste', ownerId: 'user2' },
